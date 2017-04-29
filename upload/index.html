@@ -44,7 +44,7 @@
                     if (err) {
                         results.innerHTML = 'ERROR: ' + err;
                     } else {
-                        listObjs();
+                        listObjs(fbUserId);
                     }
                 });
             } else {
@@ -52,7 +52,7 @@
             }
         }, false);
 
-        function listObjs() {
+        function listObjs(fbUserId) {
             var prefix = 'facebook-' + fbUserId;
             bucket.listObjects({
                 Prefix: prefix
@@ -89,6 +89,7 @@
                 fbUserId = response.authResponse.userID;
                 console.log(fbUserId);
                 button.style.display = 'block';
+                listObjs(fbUserId);
             })
         };
 

@@ -62,6 +62,7 @@
                 } else {
                     var objKeys = "";
                     data.Contents.forEach(function (obj) {
+                        console.log(obj);
                         objKeys += obj.Key + "<br>";
                     });
                     results.innerHTML = objKeys;

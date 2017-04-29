@@ -61,9 +61,14 @@
                     results.innerHTML = 'ERROR: ' + err;
                 } else {
                     var objKeys = "";
+                    var s3URL = "https://s3-ap-southeast-1.amazonaws.com/xoxzo-upload/" + prefix;
                     data.Contents.forEach(function (obj) {
                         console.log(obj);
+                        var srcName = obj.Key.split("/")[1].split(" ").join("+")
+                        var imgSrc = '<img src="' + s3URL + "/" + srcName + '"></img>';
+                        console.log(imgSrc);
                         objKeys += obj.Key + "<br>";
+                        objKeys += imgSrc;
                     });
                     results.innerHTML = objKeys;
                 }

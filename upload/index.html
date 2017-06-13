@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AWS SDK for JavaScript - Sample Application</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.20.min.js"></script>
+</head>
+
+<body>
+    <input type="file" id="file-chooser" />
+    <button id="upload-button" style="display:none">Upload to S3</button>
+    <div id="results"></div>
+    <div id="fb-root"></div>
+    <script type="text/javascript">
+        var appId = '1767915503436232';
+        var roleArn = 'arn:aws:iam::153954945624:role/xoxzo-upload';
+        var bucketName = 'xoxzo-upload';
+        AWS.config.region = 'ap-southeast-1';
+
+        var fbUserId;
+        var bucket = new AWS.S3({
+            params: {
+                Bucket: bucketName
+            }
+        });
+
+        var fileChooser = document.getElementById('file-chooser');
+        var button = document.getElementById('upload-button');
+        var results = document.getElementById('results');
+
+        button.addEventListener('click', function () {
+            var file = fileChooser.files[0];
+            if (file) {
+                results.innerHTML = '';
+                //Object key will be facebook-USERID#/FILE_NAME
+                var objKey = 'facebook-' + fbUserId + '/' + file.name;
+                var params = {
+                    Key: objKey,
+                    ContentType: file.type,
+                    Body: file,
+                    ACL: 'public-read'
+                };
+
+                bucket.putObject(params, function (err, data) {
+                    if (err) {
+                        results.innerHTML = 'ERROR: ' + err;
+                    } else {
+                        console.log(data);
+                        console.log(this);
+                    }
+                });
+            } else {
+                results.innerHTML = 'Nothing to upload.';
+            }
+        }, false);
+
+        function listObjs(fbUserId) {
+            var prefix = 'facebook-' + fbUserId;
+            bucket.listObjects({
+                Prefix: prefix
+            }, function (err, data) {
+                if (err) {
+                    results.innerHTML = 'ERROR: ' + err;
+                } else {
+                    var objKeys = "";
+                    var s3URL = "https://s3-ap-southeast-1.amazonaws.com/xoxzo-upload/" + prefix;
+                    data.Contents.forEach(function (obj) {
+                        console.log(obj);
+                        var srcName = obj.Key.split("/")[1].split(" ").join("+")
+                        var imgSrc = '<img src="' + s3URL + "/" + srcName + '"></img>';
+                        console.log(imgSrc);
+                        objKeys += obj.Key + "<br>";
+                        objKeys += imgSrc;
+                    });
+                    results.innerHTML = objKeys;
+                }
+            });
+        }
+        /*!
+         * Login to your application using Facebook.
+         * Uses the Facebook SDK for JavaScript available here:
+         * https://developers.facebook.com/docs/javascript/quickstart/
+         */
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: appId
+            });
+
+            FB.login(function (response) {
+                bucket.config.credentials = new AWS.WebIdentityCredentials({
+                    ProviderId: 'graph.facebook.com',
+                    RoleArn: roleArn,
+                    WebIdentityToken: response.authResponse.accessToken
+                });
+                fbUserId = response.authResponse.userID;
+                console.log(fbUserId);
+                button.style.display = 'block';
+                listObjs(fbUserId);
+            })
+        };
+
+         // Load the Facebook SDK asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</body>
+</html>

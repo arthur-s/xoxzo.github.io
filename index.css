@@ -1,0 +1,192 @@
+/** Base font for the whole site, overriding Bootstrap **/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  color: #35313b;
+  position: relative;
+  font-family: 'Open Sans', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+  padding-bottom: 520px;
+}
+
+a {
+    color: #3f7cfc;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+nav.bg-inverse {
+  background-color: #373a3c!important;
+}
+
+.navbar-brand img {
+  width: 100px;
+  margin: 2px 0;
+}
+
+.navbar-nav .nav-item+.nav-item {
+  margin-left: 0;
+}
+
+nav button {
+  float: right;
+}
+
+nav .container {
+  width: 100%;
+}
+
+section {
+  padding: 100px 0;
+}
+
+section h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
+hr.line-legal {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.btn-blue {
+  padding: 15px 50px;
+  border-radius: 0;
+  font-weight: 600;
+  border: 2px solid #253aca;
+  background-color: #253aca;
+}
+
+.btn-blue:hover {
+  background: none;
+  border: 2px solid #253aca;
+  color: #253aca;
+}
+
+.subscribe {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.subscribe-form {
+  margin-top: 50px;
+  padding: 40px;
+  border: 1px solid #cdcdcd;
+}
+
+.subscribe-form label {
+  font-weight: bold;
+}
+
+.subscribe-form input.btn {
+  margin-top: 30px;
+}
+
+.subscribe-form-width {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+footer {
+  font-size: 0.85rem;
+  position: absolute;
+  bottom: 0;
+  background-color: #4f4f4f;
+  width: 100%;
+  color: #aaa;
+  padding: 50px 0;
+}
+
+footer a {
+  color: #aaa;
+  text-decoration: underline;
+}
+
+footer a:hover {
+  color: white;
+}
+
+.footer-link {
+  margin-top: 60px;
+}
+
+.footer-link ul {
+  list-style-position: inside;
+  padding: 0;
+}
+
+.footer-link a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-link a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-contact {
+  list-style: none;
+}
+
+.footer-contact li i {
+  margin-right: 17px;
+}
+
+@media (min-width: 576px){
+  nav .container {
+    width: 540px;
+    max-width: 100%;
+  }
+
+  section h1 {
+    font-size: 2.8rem;
+  }
+}
+
+@media (min-width: 768px){
+  body {
+    padding-bottom: 270px;
+  }
+
+  nav .container {
+    width: 720px;
+  }
+
+  .navbar-nav .nav-item+.nav-item {
+    margin-left: 1rem;
+  }
+
+  .footer-link {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 992px){
+  nav .container {
+    width: 960px;
+  }
+
+  nav.navbar-fixed-top {
+    margin: 0 auto;
+  }
+
+  header h1 {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 1200px){
+  nav .container {
+    width: 1140px;
+}
